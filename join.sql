@@ -6,11 +6,11 @@ CREATE TABLE "users"(
 CREATE TABLE post(
     id SERIAL PRIMARY KEY,
     title TEXT not NULL,
-    user_id INTEGER REFERENCES "users"(id) on delete cascade
+    user_id INTEGER REFERENCES "users"(id)
 )
 
 ALTER TABLE post 
-alter column user_id set NOT NULL
+alter column user_id
 
 INSERT INTO "users" (user_name) VALUES
 ('akash'),
@@ -37,3 +37,12 @@ SELECT * FROM "users";
 
 SELECT title, user_name FROM post
 JOIN "users" on post.user_id = "users".id; 
+
+INSERT INTO post (id, title, user_id) VALUES
+(5, 'This is a test post', NULL)
+
+SELECT * FROM "users"
+LEFT JOIN post on user_id = post.id; 
+
+SELECT * FROM post
+FULL JOIN "users" on post.user_id = "users".id; 
