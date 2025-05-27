@@ -20,3 +20,5 @@ SELECT * FROM departments;
 
 SELECT * FROM employees
 CROSS JOIN departments;
+SELECT * FROM employees
+NATURAL JOIN departments;
