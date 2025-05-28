@@ -58,11 +58,47 @@ INSERT INTO employees (employee_name, department_id, salary, hire_date) VALUES
     ('Ella King', 8, 98000.00, '2018-12-28'),
     ('Nathan Rivera', 9, 74000.50, '2020-07-15'),
     ('Mia Roberts', 10, 70000.25, '2021-11-20');
-
+--Group By Department with Average Salary
 
 SELECT * FROM employees
 JOIN departments USING(department_id);
 
+--Count Employees in Each Department
+
+SELECT department_name, count(employee_id) FROM employees
+JOIN departments USING(department_id)
+GROUP BY department_name
+
+--Find the Department name with the Highest Average Salary
+
 SELECT department_name, round(avg(salary)) as avg_salary FROM employees
 JOIN departments USING(department_id)
-GROUP BY department_name;
+GROUP BY department_name
+ORDER BY avg_salary DESC
+LIMIT 1
+;
+CREATE TABLE orders (
+    order_id SERIAL PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    total_amount DECIMAL(10, 2)
+);
+
+-- Inserting sample data into the orders table
+INSERT INTO orders (customer_id, order_date, total_amount) VALUES 
+    (1, '2022-01-05', 100.50),
+    (2, '2022-01-07', 200.75),
+    (1, '2022-01-08', 150.25),
+    (3, '2022-01-10', 300.00),
+    (2, '2022-01-15', 180.50),
+    (3, '2022-01-20', 220.25),
+    (1, '2022-01-25', 90.00),
+    (2, '2022-01-28', 120.75),
+    (3, '2022-02-01', 250.50),
+    (1, '2022-02-05', 180.25);
+
+
+---Find customers who have placed more than 2 orders and calculate the total amount spent by     each of these customers.
+SELECT customer_id, count(order_id),sum(total_amount) as total_spend FROM orders
+GROUP BY customer_id
+HAVING count(order_id) >2;
