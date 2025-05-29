@@ -102,3 +102,8 @@ INSERT INTO orders (customer_id, order_date, total_amount) VALUES
 SELECT customer_id, count(order_id),sum(total_amount) as total_spend FROM orders
 GROUP BY customer_id
 HAVING count(order_id) >2;
+
+--Find the total amount of orders placed each month in the year 2022.
+
+SELECT extract(month from order_date) as month, sum(total_amount) from orders
+WHERE extract(year from order_date) = 2022 GROUP BY month;
